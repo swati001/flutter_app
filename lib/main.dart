@@ -20,11 +20,12 @@ class MyTodoApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  HomePageState home = HomePageState();
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => home;
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   var mylist = <Widget>[];
 
   @override
@@ -33,34 +34,23 @@ class _HomePageState extends State<HomePage> {
     mylist.add(MyItem(title: 'FirstItem', completed: false));
   }
 
+  void printSample(){
+    print(mylist.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold (
-      backgroundColor: Color.alphaBlend(Colors.grey[200], Colors.pink),
       appBar: new AppBar(title: new Text("Welcome to Todos List app"), backgroundColor: Color.alphaBlend(Colors.deepOrangeAccent, Colors.pinkAccent),),
       body: ListView.builder(
         itemCount: mylist.length,
         itemBuilder: (BuildContext builder, int index) => mylist[index],
-      ),
-      bottomNavigationBar: new BottomAppBar(
-        color: Color.alphaBlend(Colors.deepOrangeAccent, Colors.pinkAccent),
-        
-          child: Text("Copyright © 2019", textAlign: TextAlign.center, textScaleFactor: 1.2, style: new TextStyle(fontWeight: FontWeight.bold) ),
-          
-       
       ),
       persistentFooterButtons: <Widget>[
         // new FloatingActionButton(onPressed: () { _addTodoField(); }, tooltip: "Add task", child: new Icon(Icons.add)),
         new RaisedButton(
                 child: Text("Add Item"),
                 onPressed: () { _addTodoField(); },
-                color: Colors.deepOrangeAccent,
-                textColor: Colors.black,
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                splashColor: Colors.pinkAccent),
-        new RaisedButton(
-                child: Text("Delete All"),
-                onPressed: () { _popupDelete(); },
                 color: Colors.deepOrangeAccent,
                 textColor: Colors.black,
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -137,19 +127,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _totallyDeleteItem() {
-    setState(() {
-       if (mylist.length > 0) {
-        mylist.clear();
-      }
-    });
-   }
-
   void _addItem(String task) {
        if (task.length > 0) {
         mylist.add(MyItem(title: task, completed: false));
-        print(mylist);
        }
+   }
+
+   void _totallyDeleteItem(String task) {
+    setState(() {
+       if (mylist.length > 0) {
+        mylist.removeAt(mylist.indexOf(new Text(task)));
+      }
+    });
    }
 
    void _addTodoField() {
@@ -194,17 +183,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _popupDelete() {
+  void _popupDelete(String task) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Are you sure to delete all items from list permanently??"),
+          title: new Text("Are you sure to remove this item from your list permanently??"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Yes"),
               onPressed: () {
-                _totallyDeleteItem();
+                _totallyDeleteItem(task);
               Navigator.of(context).pop();
             }),
             new FlatButton(
