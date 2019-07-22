@@ -44,15 +44,11 @@ class MyItemState extends State<MyItem> {
           actionPane: SlidableDrawerActionPane(),
           actionExtentRatio: 0.25,
           child: Container(
-            color: Colors.white,
+            color: Colors.grey[350],
             child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.indigoAccent,
-                child: new Icon(Icons.list),
-                foregroundColor: Colors.white,
-              ),
+              leading: CircleAvatar(backgroundColor: Colors.indigoAccent, child: new Icon(Icons.list),foregroundColor: Colors.white,),
               title: new Text(widget.title, style: TextStyle(decoration: widget.completed ? TextDecoration.lineThrough: TextDecoration.none, color: widget.completed ? Colors.grey: Colors.black)),
-              // subtitle: Text('SlidableDrawerDelegate'),
+              
             ),
           ),
           actions: <Widget>[
@@ -83,6 +79,65 @@ class MyItemState extends State<MyItem> {
             ),
           ],
         );
+
+
+//         ListView.separated({
+//   Key key,
+//   Axis scrollDirection = Axis.vertical,
+//   bool reverse = false,
+//   ScrollController controller,
+//   bool primary,
+//   ScrollPhysics physics,
+//   bool shrinkWrap = false,
+//   EdgeInsetsGeometry padding,
+//   @required IndexedWidgetBuilder itemBuilder,
+//   @required IndexedWidgetBuilder separatorBuilder,
+//   @required int itemCount,
+//   bool addAutomaticKeepAlives = true,
+//   bool addRepaintBoundaries = true,
+//   bool addSemanticIndexes = true,
+//   double cacheExtent,
+// }) : assert(itemBuilder != null),
+//      assert(separatorBuilder != null),
+//      assert(itemCount != null && itemCount >= 0),
+//      itemExtent = null,
+//      childrenDelegate = SliverChildBuilderDelegate(
+//        (BuildContext context, int index) {
+//          final int itemIndex = index ~/ 2;
+//          Widget widget;
+//          if (index.isEven) {
+//            widget = itemBuilder(context, itemIndex);
+//          } else {
+//            widget = separatorBuilder(context, itemIndex);
+//            assert(() {
+//              if (widget == null) {
+//                throw FlutterError('separatorBuilder cannot return null.');
+//              }
+//              return true;
+//            }());
+//          }
+//          return widget;
+//        },
+//        childCount: _computeSemanticChildCount(itemCount),
+//        addAutomaticKeepAlives: addAutomaticKeepAlives,
+//        addRepaintBoundaries: addRepaintBoundaries,
+//        addSemanticIndexes: addSemanticIndexes,
+//        semanticIndexCallback: (Widget _, int index) {
+//          return index.isEven ? index ~/ 2 : null;
+//        },
+//      ),
+//      super(
+//        key: key,
+//        scrollDirection: scrollDirection,
+//        reverse: reverse,
+//        controller: controller,
+//        primary: primary,
+//        physics: physics,
+//        shrinkWrap: shrinkWrap,
+//        padding: padding,
+//        cacheExtent: cacheExtent,
+//        semanticChildCount: _computeSemanticChildCount(itemCount),
+//      );
     }
 
     _popupMore(String a) {
@@ -106,16 +161,6 @@ class MyItemState extends State<MyItem> {
             },
           );
     }
-
-  // void _addItem(String task) {
-  //    setState(() {
-  //      if (task.length > 0) {
-  //       // _todoItems.add(task);
-  //       MyItem(title: task, completed: false);
-  //       widget.completed = !widget.completed;
-  //      }
-  //    });
-  //  }
 
    void _removeItem(String task) {
      setState(() {
@@ -158,64 +203,7 @@ class MyItemState extends State<MyItem> {
       }
     );
   }
-
-  
-
-  //  Widget _buildTodoList() {
-  //   return new ListView.builder(
-  //     itemBuilder: (context, index) {
-  //       if(index < _todoItems.length) {
-  //         return _buildTodoItem(_todoItems[index], index);
-  //       }
-  //     },
-  //   );
-  // }
-
-  // Widget _buildTodoItem(String todoText, index) {
-  //   return new ListTile (
-  //     title: new Text(todoText, style: TextStyle(decoration: TextDecoration.none)),
-  //     onTap: () => _popupRemoveTodo(index)
-  //     );
-
-  // void _addTodoField() {
-  //   String myText = "";
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return new AlertDialog(
-  //         title: new Text("Add a new task"),
-  //         content: new Row(
-  //         children: <Widget>[
-  //           new Expanded(
-  //               child: new TextField(
-  //             autofocus: true,
-  //             decoration: new InputDecoration(
-  //                 hintText: 'Write here your todo task',
-  //                 contentPadding: const EdgeInsets.all(20.0)),
-  //             onChanged: (val) {
-  //               myText = val;
-  //             },
-  //           ))
-  //         ],
-  //       ),
-  //       actions: <Widget>[
-  //       new FlatButton(child: new Text("Submit"),
-  //       onPressed: () {
-  //         _addItem(myText);
-  //         Navigator.of(context).pop();
-  //       }
-  //       ),
-  //       new FlatButton(
-  //       child: new Text("Cancel"),
-  //       onPressed: () {
-  //         Navigator.of(context).pop();
-  //         }
-  //     )
-  //     ],
-  //       );
-  //     }
-  //   );
-  // }
+ 
   }
 
 

@@ -41,16 +41,28 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold (
+      
       appBar: new AppBar(title: new Text("Welcome to Todos List app"), backgroundColor: Color.alphaBlend(Colors.deepOrangeAccent, Colors.pinkAccent),),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: mylist.length,
         itemBuilder: (BuildContext builder, int index) => mylist[index],
+        
+        separatorBuilder: (context, index) {
+          return Divider(indent: 0.0, height: 0.6 ,color: Colors.white,);
+        }
       ),
       persistentFooterButtons: <Widget>[
         // new FloatingActionButton(onPressed: () { _addTodoField(); }, tooltip: "Add task", child: new Icon(Icons.add)),
         new RaisedButton(
                 child: Text("Add Item"),
                 onPressed: () { _addTodoField(); },
+                color: Colors.deepOrangeAccent,
+                textColor: Colors.black,
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                splashColor: Colors.pinkAccent),
+        new RaisedButton(
+                child: Text("Clear All"),
+                onPressed: () { _clearList(); },
                 color: Colors.deepOrangeAccent,
                 textColor: Colors.black,
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -141,6 +153,14 @@ class HomePageState extends State<HomePage> {
     });
    }
 
+   void _clearAll() {
+    setState(() {
+       if (mylist.length > 0) {
+        mylist.clear();
+      }
+    });
+   }
+
    void _addTodoField() {
     String myText = "";
     showDialog(
@@ -178,6 +198,32 @@ class HomePageState extends State<HomePage> {
           }
       )
       ],
+        );
+      }
+    );
+  }
+
+   void _clearList() {
+    String myText = "";
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Are you sure to delete your list??"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Yes"),
+              onPressed: () {
+                _clearAll();
+              Navigator.of(context).pop();
+            }),
+            new FlatButton(
+              child: new Text("No"),
+              onPressed: () {
+                //DO NOTHING
+                Navigator.of(context).pop();
+              })
+          ],
         );
       }
     );
