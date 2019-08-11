@@ -7,8 +7,9 @@ import 'main.dart' as main;
 
 class MyItem extends StatefulWidget{
   final String title;
+  final Function onDelete;
   bool completed;
-  MyItem({this.title, this.completed});
+  MyItem({this.title, this.completed, this.onDelete});
 
   
   @override
@@ -56,7 +57,7 @@ class MyItemState extends State<MyItem> {
               caption: 'Archive',
               color: Colors.blue,
               icon: Icons.archive,
-              // onTap: () => home.printSample(),
+              onTap: () => _popupMore(widget.title),
             ),
             IconSlideAction(
               caption: 'Share',
@@ -69,7 +70,7 @@ class MyItemState extends State<MyItem> {
               caption: 'More',
               color: Colors.black45,
               icon: Icons.more_horiz,
-              onTap: () => _popupMore('More'),
+              onTap: () => _popupMore(widget.title),
             ),
             IconSlideAction(
               caption: 'Mark', 
@@ -154,7 +155,11 @@ class MyItemState extends State<MyItem> {
                   ),
                   FlatButton(
                     child: Text('Ok'),
-                    onPressed: () => Navigator.of(context).pop(true),
+                    onPressed: () {
+                        // _removeItem(task);
+                        widget.onDelete(a);
+                        Navigator.of(context).pop();
+                    },
                   ),
                 ],
               );
@@ -167,6 +172,7 @@ class MyItemState extends State<MyItem> {
        if (!widget.completed) {
           widget.completed = !widget.completed;
        }
+      //  widget.onDelete(task);
      });
    }
 

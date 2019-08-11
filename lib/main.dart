@@ -1,6 +1,7 @@
 // import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'item.dart';
 
 void main() =>  runApp(MyTodoApp());
@@ -26,16 +27,16 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  var mylist = <Widget>[];
+  var mylist = <MyItem>[];
 
   @override
   void initState() {
     super.initState();
-    mylist.add(MyItem(title: 'FirstItem', completed: false));
+    mylist.add(MyItem(title: 'FirstItem', completed: false, onDelete: _totallyDeleteItem));
   }
 
   void printSample(){
-    print(mylist.length);
+    // print(mylist.length);
   }
 
   @override
@@ -43,14 +44,40 @@ class HomePageState extends State<HomePage> {
     return new Scaffold (
       
       appBar: new AppBar(title: new Text("Welcome to Todos List app"), backgroundColor: Color.alphaBlend(Colors.deepOrangeAccent, Colors.pinkAccent),),
-      body: ListView.separated(
+      body: new Swiper(
+      // ListView.separated(
+        // itemCount: mylist.length,
+        // itemBuilder: (BuildContext builder, int index) => mylist[index],
+        
+        // separatorBuilder: (context, index) {
+        //   return Divider(indent: 0.0, height: 0.6 ,color: Colors.white,);
+        // }
+        
+        itemBuilder: (BuildContext context,int index){
+       return new Container(
+            color: Colors.blue[50],
+            // child: new Center(
+            // child: new Text("sdssdfsdfsd"),),
+        child: ListView.separated(
         itemCount: mylist.length,
         itemBuilder: (BuildContext builder, int index) => mylist[index],
         
         separatorBuilder: (context, index) {
           return Divider(indent: 0.0, height: 0.6 ,color: Colors.white,);
         }
+        )
+
+    );
+          // return new Image.network("http://via.placeholder.com/350x150",fit: BoxFit.fill,);
+         
+        },
+        itemCount: 1,
+        // pagination:  new SwiperPagination(
+        //   margin: new EdgeInsets.all(20.0),
+        // ),
+        // control: new SwiperControl(),
       ),
+      
       persistentFooterButtons: <Widget>[
         // new FloatingActionButton(onPressed: () { _addTodoField(); }, tooltip: "Add task", child: new Icon(Icons.add)),
         new RaisedButton(
@@ -141,14 +168,17 @@ class HomePageState extends State<HomePage> {
 
   void _addItem(String task) {
        if (task.length > 0) {
-        mylist.add(MyItem(title: task, completed: false));
+        mylist.add(MyItem(title: task, completed: false, onDelete: _totallyDeleteItem));
        }
    }
 
    void _totallyDeleteItem(String task) {
     setState(() {
        if (mylist.length > 0) {
-        mylist.removeAt(mylist.indexOf(new Text(task)));
+        // mylist.removeAt(0);
+
+        mylist.removeAt(mylist.indexWhere( ( e) => e.title == task));
+        
       }
     });
    }
